@@ -1,0 +1,20 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Food-ERP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-fixed-top navbar">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("New Store", "Stores", "api")</li>
+                <li>@Html.ActionLink("Stores", "Stores", "api")</li>
+                <li>@Html.ActionLink("Locations", "Locations", "api")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
