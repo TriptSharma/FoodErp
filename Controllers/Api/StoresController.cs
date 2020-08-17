@@ -20,44 +20,45 @@ namespace FoodErp.Controllers.Api
 
         //GET api/stores/
         [HttpGet]
-        public IEnumerable<Store> GetStores()
+        public IHttpActionResult GetStores()
         {
-            return _context.Store.ToList();
+            var stores = _context.Store.Include(m => m.LocationId).ToList();
+            return Ok(stores);
         }
 
         //GET api/stores/
         [HttpGet]
-        public Store GetStore(int id)
+        public IHttpActionResult GetStore(int id)
         {
             var store = _context.Store.SingleOrDefault(m => m.StoreId == id);
             if (store == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return store;
+            return Ok(store);
         }
 
-        //POST api/Stores
+        //POST api/stores
         [HttpPost]
-        public Store CreateStore(Store store)
+        public IHttpActionResult CreateStore(Store store)
         {
             if (!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             _context.Store.Add(store);
             _context.SaveChanges();
-            return store;
+            return Created("stores/"+store.StoreId, store);
         }
 
         //PUT api/Stores/id
-        public Store UpdateStore(int id, Store store)
+        public IHttpActionResult UpdateStore(int id, Store store)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
 
             var storeInDb = _context.Store.SingleOrDefault(m => m.StoreId == id);
             if (storeInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             else
             {
                 storeInDb.StoreName = store.StoreName;
@@ -67,18 +68,18 @@ namespace FoodErp.Controllers.Api
 
                 _context.SaveChanges();
             }
-            return store;
+            return Ok(store);
         }
 
         //DELETE api/Stores/id
-        public Store DeleteStore(Store store)
+        public IHttpActionResult DeleteStore(Store store)
         {
             var storeInDb = _context.Store.SingleOrDefault(m => m.StoreId == store.StoreId);
             if (storeInDb == null)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             _context.Store.Remove(storeInDb);
             _context.SaveChanges();
-            return store;
+            return Ok(store);
         }
 
     }

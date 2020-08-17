@@ -19,44 +19,45 @@ namespace FoodErp.Controllers.Api
 
         //GET api/locations/
         [HttpGet]
-        public IEnumerable<Location> GetLocations()
+        public IHttpActionResult GetLocations()
         {
-            return _context.Location.ToList();
+            var locations = _context.Location.ToList();
+            return Ok(locations);
         }
 
         //GET api/locations/
         [HttpGet]
-        public Location GetLocation(int id)
+        public IHttpActionResult GetLocation(int id)
         {
             var location = _context.Location.SingleOrDefault(m => m.LocationId == id);
             if (location == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return location;
+            return Ok(location);
         }
 
         //POST api/Locations
         [HttpPost]
-        public Location CreateLocation(Location location)
+        public IHttpActionResult CreateLocation(Location location)
         {
             if (!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             _context.Location.Add(location);
             _context.SaveChanges();
-            return location;
+            return Created("locations/"+location.LocationId, location);
         }
 
         //PUT api/Locations/id
-        public Location UpdateLocation(int id, Location location)
+        public IHttpActionResult UpdateLocation(int id, Location location)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
 
             var locationInDb = _context.Location.SingleOrDefault(m => m.LocationId == id);
             if (locationInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             else
             {
                 locationInDb.District = location.District;
@@ -66,18 +67,18 @@ namespace FoodErp.Controllers.Api
 
                 _context.SaveChanges();
             }
-            return location;
+            return Ok(location);
         }
 
         //DELETE api/Locations/id
-        public Location DeleteLocation(Location location)
+        public IHttpActionResult DeleteLocation(Location location)
         {
             var locationInDb = _context.Location.SingleOrDefault(m => m.LocationId == location.LocationId);
             if (locationInDb == null)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             _context.Location.Remove(locationInDb);
             _context.SaveChanges();
-            return location;
+            return Ok(location);
         }
 
     }
