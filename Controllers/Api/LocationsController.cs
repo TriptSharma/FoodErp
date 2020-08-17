@@ -10,18 +10,18 @@ namespace FoodErp.Controllers.Api
 {
     public class LocationsController : ApiController
     {
-        private FoodiesContext _context;
+        private FoodiesEntities _context;
 
         public LocationsController()
         {
-            _context = new FoodiesContext();
+            _context = new FoodiesEntities();
         }
 
         //GET api/locations/
         [HttpGet]
         public IHttpActionResult GetLocations()
         {
-            var locations = _context.Location.ToList();
+            var locations = _context.Locations.ToList();
             return Ok(locations);
         }
 
@@ -29,7 +29,7 @@ namespace FoodErp.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetLocation(int id)
         {
-            var location = _context.Location.SingleOrDefault(m => m.LocationId == id);
+            var location = _context.Locations.SingleOrDefault(m => m.LocationId == id);
             if (location == null)
                 return NotFound();
 
@@ -44,7 +44,7 @@ namespace FoodErp.Controllers.Api
             {
                 return BadRequest();
             }
-            _context.Location.Add(location);
+            _context.Locations.Add(location);
             _context.SaveChanges();
             return Created("locations/"+location.LocationId, location);
         }
@@ -55,7 +55,7 @@ namespace FoodErp.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var locationInDb = _context.Location.SingleOrDefault(m => m.LocationId == id);
+            var locationInDb = _context.Locations.SingleOrDefault(m => m.LocationId == id);
             if (locationInDb == null)
                 return NotFound();
             else
@@ -73,10 +73,10 @@ namespace FoodErp.Controllers.Api
         //DELETE api/Locations/id
         public IHttpActionResult DeleteLocation(Location location)
         {
-            var locationInDb = _context.Location.SingleOrDefault(m => m.LocationId == location.LocationId);
+            var locationInDb = _context.Locations.SingleOrDefault(m => m.LocationId == location.LocationId);
             if (locationInDb == null)
                 return BadRequest();
-            _context.Location.Remove(locationInDb);
+            _context.Locations.Remove(locationInDb);
             _context.SaveChanges();
             return Ok(location);
         }

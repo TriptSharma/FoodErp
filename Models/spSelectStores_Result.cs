@@ -10,15 +10,12 @@
 namespace FoodErp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Store
+    public partial class spSelectStores_Result
     {
         public int StoreId { get; set; }
         public string StoreName { get; set; }
         public int LocationId { get; set; }
         public Nullable<double> Revenue { get; set; }
-    
-        public virtual Location Location { get; set; }
     }
 }
