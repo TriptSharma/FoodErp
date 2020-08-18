@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FoodErp.Models.StoreViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.StoreName)</th>
+        <th>@Html.DisplayNameFor(model => model.Location.District)</th>
+        <th>@Html.DisplayNameFor(model => model.Location.City)</th>
+        <th>@Html.DisplayNameFor(model => model.Location.State)</th>
+        <th>@Html.DisplayNameFor(model => model.Location.Country)</th>
+        <th>@Html.DisplayNameFor(model => model.Revenue)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.StoreName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Location.District)</td>
+            <td>@Html.DisplayFor(modelItem => item.Location.City)</td>
+            <td>@Html.DisplayFor(modelItem => item.Location.State)</td>
+            <td>@Html.DisplayFor(modelItem => item.Location.Country)</td>
+            <td>@Html.DisplayFor(modelItem => item.Revenue)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StoreId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.StoreId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StoreId })
+            </td>
+        </tr>
+    }
+
+</table>
+
