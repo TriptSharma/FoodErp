@@ -7,27 +7,9 @@
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("New Store", "Create", "Store", routeValues: null, htmlAttributes: new{ @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Stores", "Index", "Store", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Locations", "Locations", "api", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Locations", "Index", "Location", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
     </div>
 </div>
-
-@*<div class="navbar navbar-expand-lg navbar-dark bg-dark">
-    @Html.ActionLink("Food-ERP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-
-            <li>@Html.ActionLink("New Store", "Create", "Store", new { @class = "nav-item nav-link active" })</li>
-            <li>@Html.ActionLink("Stores", "Index", "Store", new { @class = "nav-item nav-link" })</li>
-            <li>@Html.ActionLink("Locations", "Locations", "api", new { @class = "nav-item nav-link" })</li>
-        </ul>
-        @Html.Partial("_LoginPartial")
-    </div>
-</div>
-
-*@

@@ -1,45 +1,48 @@
 ﻿using FoodErp.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace FoodErp.Controllers
 {
-    public class StoreController : Controller
+    public class LocationController : Controller
     {
-        // GET: Store
+        // GET: Location
         public ActionResult Index()
         {
 
-            IEnumerable<StoreViewModel> stores = null;
+            IEnumerable<LocationViewModel> locations = null;
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:44345/api/stores");
+            httpClient.BaseAddress = new Uri("https://localhost:44345/api/locations");
 
-            var consumeApi = httpClient.GetAsync("stores");
+            var consumeApi = httpClient.GetAsync("locations");
             consumeApi.Wait();
 
             var readData = consumeApi.Result;
             if (readData.IsSuccessStatusCode)
             {
-                var displayData = readData.Content.ReadAsAsync<IList<StoreViewModel>>();
+                var displayData = readData.Content.ReadAsAsync<IList<LocationViewModel>>();
                 displayData.Wait();
-                stores = displayData.Result;
+                locations = displayData.Result;
             }
-            return View(stores);
+            return View(locations);
         }
 
-        public ActionResult Create(StoreViewModel store)
+        public ActionResult Create()
+        {
+            return View("Create");
+        }
+        [HttpPost]
+        public ActionResult Create(LocationViewModel location)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:44345/api/stores");
+            httpClient.BaseAddress = new Uri("https://localhost:44345/api/locations");
 
             //HTTP POST
-            var postTask = httpClient.PostAsJsonAsync<StoreViewModel>("stores", store);
+            var postTask = httpClient.PostAsJsonAsync<LocationViewModel>("locations", location);
             postTask.Wait();
 
             var result = postTask.Result;
@@ -47,56 +50,52 @@ namespace FoodErp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            else
-            {
-
-                ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-            }
-
-            return View(store);
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+            return View(location);
         }
 
         public ActionResult Update(int id)
         {
-            StoreViewModel storeInDb = new StoreViewModel();
+            LocationViewModel locationInDb = new LocationViewModel();
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("https://localhost:44345/api/");
 
-            var getTask = httpClient.GetAsync("stores?id=" + id.ToString());
+            var getTask = httpClient.GetAsync("locations?id=" + id.ToString());
             getTask.Wait();
 
             var readData = getTask.Result;
             if (readData.IsSuccessStatusCode)
             {
-                var dbData = readData.Content.ReadAsAsync<StoreViewModel>();
+                var dbData = readData.Content.ReadAsAsync<LocationViewModel>();
                 dbData.Wait();
-                storeInDb = dbData.Result;
+                locationInDb = dbData.Result;
             }
-            return View(storeInDb);
+            return View(locationInDb);
         }
 
         [HttpPost]
-        public ActionResult Update(StoreViewModel store)
+        public ActionResult Update(LocationViewModel location)
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("https://localhost:44345/api/");
 
-            var putTask = httpClient.PutAsJsonAsync<StoreViewModel>("stores", store);
-                putTask.Wait();
+            var putTask = httpClient.PutAsJsonAsync<LocationViewModel>("locations", location);
+            putTask.Wait();
 
             var putResult = putTask.Result;
             if (putResult.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            return View(store);
+            return View(location);
         }
-            //HTTP POST
+        //HTTP POST
 
-        public ActionResult Delete(int id) {
+        public ActionResult Delete(int id)
+        {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("https://localhost:44345/api/");
 
-            var deleteTask = httpClient.DeleteAsync("stores/" + id.ToString());
+            var deleteTask = httpClient.DeleteAsync("locations/" + id.ToString());
             deleteTask.Wait();
 
             var result = deleteTask.Result;
@@ -104,7 +103,7 @@ namespace FoodErp.Controllers
             {
                 return RedirectToAction("Index");
             }
-        return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
     }
 }
