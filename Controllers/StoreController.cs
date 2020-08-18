@@ -13,14 +13,14 @@ namespace FoodErp.Controllers
     public class StoreController : Controller
     {
         // GET: Store
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
 
             IEnumerable<StoreViewModel> stores = null;
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:44345/api/Stores");
+            httpClient.BaseAddress = new Uri("https://localhost:44345/api/stores");
 
-            var consumeApi = httpClient.GetAsync("Stores");
+            var consumeApi = httpClient.GetAsync("stores");
             consumeApi.Wait();
 
             var readData = consumeApi.Result;
@@ -47,7 +47,11 @@ namespace FoodErp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+            else
+            {
+
+                ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+            }
 
             return View(store);
         }

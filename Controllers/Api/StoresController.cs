@@ -114,7 +114,6 @@ namespace FoodErp.Controllers.Api
             {
 
                 var storeInDb = _context.Stores.Where(m => m.StoreId == store.StoreId).FirstOrDefault<Store>();
-                var locInDb = _context.Locations.Where(m => m.LocationId == store.Location.LocationId).FirstOrDefault<Location>();
 
                 if (storeInDb == null)
                     return NotFound();
@@ -124,14 +123,6 @@ namespace FoodErp.Controllers.Api
                     storeInDb.LocationId = store.Location.LocationId;
                     storeInDb.Revenue = store.Revenue;
 
-                    if (locInDb != null)
-                    {
-                        locInDb.District = store.Location.District;
-                        locInDb.City = store.Location.City;
-                        locInDb.State = store.Location.State;
-                        locInDb.Country = store.Location.Country;
-
-                    }
                     _context.SaveChanges();
                 }
             }
