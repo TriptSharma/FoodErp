@@ -30,7 +30,7 @@
             <td>@Html.DisplayFor(modelItem => item.Location.Country)</td>
             <td>@Html.DisplayFor(modelItem => item.Revenue)</td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.StoreId }) |
+                @Html.ActionLink("Edit", "Update", new { id = item.StoreId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.StoreId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.StoreId })
             </td>
