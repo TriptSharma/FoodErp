@@ -283,12 +283,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>StoreDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs">
       <DependentUpon>StoreDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LocationViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\spSelectCustomers_Result.cs">
+      <DependentUpon>StoreDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spSelectLocations_Result.cs">
       <DependentUpon>StoreDataModel.tt</DependentUpon>
     </Compile>
