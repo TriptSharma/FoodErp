@@ -39,6 +39,27 @@ namespace FoodErp.Controllers.Api
             return Ok(customers);
         }
 
+        [HttpPost]
+        public IHttpActionResult Create(CustomerViewModel customer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            using(var _context = new FoodiesEntities())
+            {
+                _context.Customers.Add(new Customer()
+                {
+                    CustomerId = customer.CustomerId,
+                    CustomerName = customer.CustomerName,
+                    Purchase = customer.Purchase,
+                    StoreId = customer.Store.StoreId
+                });
+                _context.SaveChanges();
+            }
+
+            return Created("custoemrs/"+customer.CustomerId.ToString(), customer);
+        }
         [HttpDelete]
         public IHttpActionResult DeleteCustomer(int id)
         {

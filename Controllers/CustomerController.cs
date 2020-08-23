@@ -33,6 +33,26 @@ namespace FoodErp.Controllers
             return View(customers);
         }
 
+        public ActionResult Create(CustomerViewModel customer)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://localhost:44345/api/customers");
+
+            var postTask = httpClient.PostAsJsonAsync("customers", customer);
+            postTask.Wait();
+
+            var result = postTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server Error. PLease contact Administrator");
+            }
+            return View(customer);
+        }
+
         public ActionResult Delete(int id)
         {
             HttpClient httpClient = new HttpClient();

@@ -415,6 +415,7 @@
     <Content Include="Views\Location\Create.cshtml" />
     <Content Include="Views\Location\Update.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
