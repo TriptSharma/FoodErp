@@ -276,6 +276,7 @@
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\LocationsController.cs" />
     <Compile Include="Controllers\Api\StoresController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -413,6 +414,7 @@
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\Create.cshtml" />
     <Content Include="Views\Location\Update.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

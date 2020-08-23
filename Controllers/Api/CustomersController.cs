@@ -23,6 +23,7 @@ namespace FoodErp.Controllers.Api
                 customers = _context.Customers.Include("Store")
                             .Select(s => new CustomerViewModel()
                             {
+                                CustomerId = s.CustomerId,
                                 CustomerName = s.CustomerName,
                                 Purchase = s.Purchase,
                                 Store = s.StoreId == null? null : new StoreViewModel()
@@ -38,6 +39,7 @@ namespace FoodErp.Controllers.Api
             return Ok(customers);
         }
 
+        [HttpDelete]
         public IHttpActionResult DeleteCustomer(int id)
         {
             if (id <= 0)
