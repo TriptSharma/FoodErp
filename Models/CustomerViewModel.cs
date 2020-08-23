@@ -9,7 +9,7 @@ namespace FoodErp.Models
     {
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public float Purchase { get; set; }
+        public Nullable<double> Purchase { get; set; }
         public StoreViewModel Store { get; set; }
     }
 }
