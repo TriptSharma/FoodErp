@@ -273,8 +273,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\LocationsController.cs" />
     <Compile Include="Controllers\Api\StoresController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -283,12 +285,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>StoreDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs">
       <DependentUpon>StoreDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LocationViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\spSelectCustomers_Result.cs">
+      <DependentUpon>StoreDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spSelectLocations_Result.cs">
       <DependentUpon>StoreDataModel.tt</DependentUpon>
     </Compile>
@@ -405,6 +414,8 @@
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\Create.cshtml" />
     <Content Include="Views\Location\Update.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

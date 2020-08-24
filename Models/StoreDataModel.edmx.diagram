@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="FoodiesModel.Location" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodiesModel.Store" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="FoodiesModel.fk_location_id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FoodiesModel.Customer" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="FoodiesModel.FK__Customer__StoreI__68487DD7" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

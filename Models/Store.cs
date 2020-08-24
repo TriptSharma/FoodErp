@@ -14,11 +14,19 @@ namespace FoodErp.Models
     
     public partial class Store
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Store()
+        {
+            this.Customers = new HashSet<Customer>();
+        }
+    
         public int StoreId { get; set; }
         public string StoreName { get; set; }
         public int LocationId { get; set; }
         public Nullable<double> Revenue { get; set; }
     
         public virtual Location Location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

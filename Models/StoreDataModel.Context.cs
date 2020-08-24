@@ -29,6 +29,7 @@ namespace FoodErp.Models
     
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
     
         public virtual int spAddLocation(string district, string city, string state, string country)
         {
@@ -167,6 +168,11 @@ namespace FoodErp.Models
                 new ObjectParameter("NewStoreName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUpdateStoreName", storeNameParameter, newStoreNameParameter);
+        }
+    
+        public virtual ObjectResult<spSelectCustomers_Result> spSelectCustomers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spSelectCustomers_Result>("spSelectCustomers");
         }
     }
 }

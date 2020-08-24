@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FoodiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FoodiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="Purchase" Type="float" />
+        </EntityType>
         <EntityType Name="Location">
           <Key>
             <PropertyRef Name="LocationId" />
@@ -24,6 +33,18 @@
           <Property Name="LocationId" Type="int" Nullable="false" />
           <Property Name="Revenue" Type="float" />
         </EntityType>
+        <Association Name="FK__Customer__StoreI__68487DD7">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_location_id">
           <End Role="Location" Type="Self.Location" Multiplicity="1" />
           <End Role="Store" Type="Self.Store" Multiplicity="*" />
@@ -53,6 +74,7 @@
         <Function Name="spDeleteStore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StoreId" Type="int" Mode="In" />
         </Function>
+        <Function Name="spSelectCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spSelectLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spSelectStore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -77,15 +99,19 @@
           <Parameter Name="NewStoreName" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="FoodiesModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Customer__StoreI__68487DD7" Association="Self.FK__Customer__StoreI__68487DD7">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="fk_location_id" Association="Self.fk_location_id">
             <End Role="Location" EntitySet="Location" />
             <End Role="Store" EntitySet="Store" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FoodiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -109,6 +135,7 @@
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <Property Name="Revenue" Type="Double" />
           <NavigationProperty Name="Location" Relationship="Self.fk_location_id" FromRole="Store" ToRole="Location" />
+          <NavigationProperty Name="Customers" Relationship="FoodiesModel.FK__Customer__StoreI__68487DD7" FromRole="Store" ToRole="Customer" />
         </EntityType>
         <Association Name="fk_location_id">
           <End Role="Location" Type="Self.Location" Multiplicity="1" />
@@ -141,14 +168,14 @@
             <Parameter Name="Revenue" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="spDeleteLocation">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spDeleteStore">
-            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+          <Parameter Name="StoreId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spSelectLocations" ReturnType="Collection(FoodiesModel.spSelectLocations_Result)" />
           <FunctionImport Name="spSelectStore" ReturnType="Collection(FoodiesModel.spSelectStore_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spSelectStores" ReturnType="Collection(FoodiesModel.spSelectStores_Result)" />
           <FunctionImport Name="spSelectStoresAll" ReturnType="Collection(FoodiesModel.spSelectStoresAll_Result)" />
@@ -169,6 +196,12 @@
             <Parameter Name="StoreName" Mode="In" Type="String" />
             <Parameter Name="NewStoreName" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Customers" EntityType="FoodiesModel.Customer" />
+          <AssociationSet Name="FK__Customer__StoreI__68487DD7" Association="FoodiesModel.FK__Customer__StoreI__68487DD7">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <FunctionImport Name="spSelectCustomers" ReturnType="Collection(FoodiesModel.spSelectCustomers_Result)" />
         </EntityContainer>
         <ComplexType Name="spSelectLocations_Result">
           <Property Type="Int32" Name="LocationId" Nullable="false" />
@@ -199,6 +232,34 @@
           <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="State" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StoreId" Type="Int32" />
+          <Property Name="Purchase" Type="Double" />
+          <NavigationProperty Name="Store" Relationship="FoodiesModel.FK__Customer__StoreI__68487DD7" FromRole="Customer" ToRole="Store" />
+        </EntityType>
+        <Association Name="FK__Customer__StoreI__68487DD7">
+          <End Type="FoodiesModel.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="FoodiesModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spSelectCustomers_Result">
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="StoreId" Nullable="true" />
+          <Property Type="Double" Name="Purchase" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -280,6 +341,26 @@
           <FunctionImportMapping FunctionImportName="spUpdateLocation" FunctionName="FoodiesModel.Store.spUpdateLocation" />
           <FunctionImportMapping FunctionImportName="spUpdateStore" FunctionName="FoodiesModel.Store.spUpdateStore" />
           <FunctionImportMapping FunctionImportName="spUpdateStoreName" FunctionName="FoodiesModel.Store.spUpdateStoreName" />
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="FoodiesModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Purchase" ColumnName="Purchase" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spSelectCustomers" FunctionName="FoodiesModel.Store.spSelectCustomers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FoodiesModel.spSelectCustomers_Result">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Purchase" ColumnName="Purchase" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
