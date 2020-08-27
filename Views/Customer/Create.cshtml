@@ -1,4 +1,5 @@
-﻿@model FoodErp.Models.CustomerViewModel
+﻿@*@model FoodErp.Models.CustomerViewModel
+*@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,48 +7,81 @@
 
 <h2>Add New Customer</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-horizontal">
-        <hr />
+@*@using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                    <hr />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Store.StoreId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Store.StoreId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Store.StoreId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Store.StoreId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Store.StoreId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Store.StoreId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Purchase, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Purchase, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Purchase, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Purchase, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Purchase, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Purchase, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-    </div>
+                </div>
+
+
     @Html.AntiForgeryToken()
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Add" class="btn btn-primary" ng-click="create()" />
         </div>
     </div>
-}
+
+    }
+*@
+
+<div class="form-horizontal" ng-controller="customerController">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr />
+    <div class="form-group">
+        <label>Customer Name</label>
+        <input type="text" ng-model="newCustomer.CustomerName" class="form-group" />
+    </div>
+
+    <div class="form-group">
+        <label>Store ID</label>
+        <input type="number" ng-model="newCustomer.Store.StoreId" class="form-group" />
+    </div>
+
+    <div class="form-group">
+        <label>Purchase</label>
+        <input type="number" min="1" , step="any" ng-model="newCustomer.Purchase" class="form-group" />
+    </div>
+
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add" class="btn btn-primary" ng-click="create()" />
+        </div>
+    </div>
+</div>
+
 
 <div>
     @Html.ActionLink("Back to Customers", "Index")
 </div>
 
+@section scripts{
+    @Scripts.Render("~/Scripts/Angular/CustomerScript.js")
 
-
+}

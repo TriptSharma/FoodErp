@@ -3,10 +3,25 @@
         .then(function (response) {
             $scope.customers = response.data;
             $log.info;
-        },
-            function (response) {
+        }, function (response) {
                 $scope.error = response.data;
                 $log.info;
             }
-        )
+        );
+
+    $scope.create = function () {
+        $http({
+            method: "POST",
+            url: "https://localhost:44345/api/customers",
+            data: $scope.newCustomer
+            }).success(function (response) {
+                $scope.register = null;
+                $log.info;
+            }).error(function(response) {
+                $scope.error = response.data;
+                $log.info;
+            })
+            
+    };
+
 });
