@@ -44,7 +44,9 @@
             <td>{{ customer.CustomerName }}</td>
             <td>{{ customer.Purchase }}</td>
             <td>{{ customer.Store.StoreName }}</td>
-            <td></td>
+            <td>
+                <a onmouseover="this.style.cursor='pointer'" ng-click="delete(customer.CustomerId)">Delete</a>
+            </td>
         </tr>
 
 
